@@ -132,6 +132,7 @@
     </nav>
 
     <input type="hidden" name="startPage" value="{{ data.paginator.num_pages }}" id="startPage"/>
+    <input type="hidden" name="query" value="{{ q }}" id="query" />
     <!-- Footer-->
     {% include 'homepage/footer.html' %}
 {% endblock %}

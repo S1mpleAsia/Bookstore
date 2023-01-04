@@ -1,6 +1,7 @@
-var updateBtns = document.getElementsByClassName('cart-update');
-var element = document.getElementsByClassName('dropdown');
-console.log($('#startPage').val())
+// var updateBtns = document.getElementsByClassName('cart-update');
+// var element = document.getElementsByClassName('dropdown');
+console.log($('#startPage').val());
+var query = $('#query').val()
 
 $(document).on("click", ".dropdown", function () {
     $('.dropdown').get(0).classList.toggle('open');
@@ -59,7 +60,10 @@ $(function () {
         onPageClick: function (event, page) {
             $.ajax({
                 url: "/get/pagination",
-                data: {"page": page},
+                data: {
+                    "page": page,
+                    "q": query,
+                },
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function (result) {

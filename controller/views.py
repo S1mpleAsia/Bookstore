@@ -60,7 +60,7 @@ class CartView(LoginRequiredMixin, View):
         cart_items = cart.cartitem_set.all()
         quantity = cart.get_cart_quantity
 
-        context = {"cart_items": cart_items, "cart": cart, "quantity": quantity}
+        context = {"cart_items": cart_items, "cart": cart, "quantity": quantity, "user": customer}
         return render(request, 'cart/index.html', context)
 
 
@@ -99,6 +99,8 @@ def updateCart(request):
     action = data['action']
     template = data['template']
 
+    print(id)
+
     customer = request.user
     book = Book.objects.get(id=id)
     cart, created = Cart.objects.get_or_create(user=customer)
@@ -120,10 +122,9 @@ def updateCart(request):
     total_items = 4
     p = Paginator(books_list, total_items)
     page = request.GET.get('page', 1)
-    print(page)
+    # print(page)
     books = p.get_page(page)
 
-    customer = request.user
     if str(customer) != 'AnonymousUser':
         cart, created = Cart.objects.get_or_create(user=customer)
         cart_items = cart.cartitem_set.all()
@@ -170,7 +171,15 @@ def paginationItems(request):
 
 
 def pagination(request):
-    books_list = Book.objects.all()
+    query = request.GET.get('q', '')
+
+    if query == '':
+        books_list = Book.objects.all()
+        print(books_list)
+    else:
+        books_list = Book.objects.filter(title__icontains=query)
+        print(books_list)
+
     total_items = 3
     p = Paginator(books_list, total_items)
     page = request.GET.get('page', 1)
@@ -182,10 +191,10 @@ def pagination(request):
         cart, created = Cart.objects.get_or_create(user=customer)
         cart_items = cart.cartitem_set.all()
         quantity = cart.get_cart_quantity
-        context = {"data": books, "user": customer, "cart_items": cart_items, "quantity": quantity, "cart": cart}
+        context = {"data": books, "user": customer, "cart_items": cart_items, "quantity": quantity, "cart": cart, "q": query}
     else:
         cart_items = []
         cart = []
-        context = {"data": books, "user": customer, "quantity": 0, "cart_items": cart_items, "cart": cart}
+        context = {"data": books, "user": customer, "quantity": 0, "cart_items": cart_items, "cart": cart, "q": query}
 
     return context

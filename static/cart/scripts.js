@@ -1,6 +1,6 @@
-var updateBtns = document.getElementsByClassName('cart-update');
-var element = document.getElementsByClassName('dropdown');
-var checkoutBtn = document.getElementsByClassName('btn-checkout');
+// var updateBtns = document.getElementsByClassName('cart-update');
+// var element = document.getElementsByClassName('dropdown');
+// var checkoutBtn = document.getElementsByClassName('btn-checkout');
 
 $(document).on("click", ".cart-update", function () {
     var id = this.dataset.id;
@@ -26,6 +26,7 @@ function updateCart(id, action) {
         dataType: 'json',
         success: function (result) {
             $('#cart-content').html(result);
+            // location.reload();
         },
         error: function (error) {
             console.log(error);
