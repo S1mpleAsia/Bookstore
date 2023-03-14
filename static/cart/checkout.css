@@ -84,7 +84,7 @@ textarea.input {
 }
 
 .input:hover {
-  background: #c9cbd0;
+  background: #f0f0f0 !important;
 }
 
 /*-- checkbox & radio input --*/
@@ -263,10 +263,34 @@ textarea.input {
 }
 
 .form-group {
-  padding-bottom: 30px;
-  width: 70%;
+  padding-bottom: 20px;
+  width: 80%;
+
 }
 
 .form-group input {
   height: 50px;
+  border-radius: 8px;
+}
+
+#email {
+  width: 48%;
+  display: inline-block;
+}
+
+#phone-number {
+  padding-left: 10px;
+  width: 31.4%;
+  display: inline-block;
+}
+
+.select-box {
+  height: 50px;
+  border-radius: 8px;
+  padding: 0 15px;
+  width: 49%;
+}
+
+#city {
+  margin-left: 9px;
 }

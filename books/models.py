@@ -8,6 +8,14 @@ class Publisher(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=60, default='')
+    slug = models.CharField(max_length=200, default='')
+
+    def __str__(self):
+        return self.title
+
+
 class Book(models.Model):
     title = models.CharField(max_length=60, default='')
     author = models.CharField(max_length=60, default='')
@@ -15,6 +23,7 @@ class Book(models.Model):
     description = models.TextField(default='')
     publisher_id = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     price = models.FloatField(default=0)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title

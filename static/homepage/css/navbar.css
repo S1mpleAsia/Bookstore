@@ -126,7 +126,11 @@ textarea.input {
 }
 
 .input:hover {
-  background: #c9cbd0;
+  background: #e7eaef;
+}
+
+.search-bar {
+  outline: none;
 }
 
 /*-- checkbox & radio input --*/

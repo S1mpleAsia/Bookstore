@@ -4,6 +4,23 @@ height: 100vh !important;
 }
 }
 
+.item-details {
+    display: flex; justify-content: space-between;
+    border-top: 2px dashed #969393;
+    padding-top: 10px;
+}
+
+.item-details:first-child {
+    border: 0;
+    padding-top: 25px;
+}
+
+.item-details:last-child {
+    padding-bottom: 40px;
+    border-bottom: 3px solid #2a1f1f;
+}
+
+
 .card-registration .select-input.form-control[readonly]:not([disabled]) {
 font-size: 1rem;
 line-height: 2.15;
