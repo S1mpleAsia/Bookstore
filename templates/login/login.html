@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>SignIn&SignUp</title>
     <link rel="stylesheet" type="text/css" href="{% static 'login/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'toast/jquery.toast.css' %}"/>
     <script src="https://kit.fontawesome.com/98fa4d0f06.js" crossorigin="anonymous"></script>
 
 </head>
@@ -15,6 +16,52 @@
     <div class="forms-container">
         <div class="signin-signup">
             <form action="" method="post" class="sign-in-form">
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+                                <script src="{% static 'toast/jquery.toast.js' %}"></script>
+                                <script>
+                                    var myToast = $.toast({
+                                        heading: 'Error',
+                                        text: 'Username or Password incorrect',
+                                        showHideTransition: 'fade',
+                                        icon: 'error',
+                                        position: 'top-right'
+                                    })
+                                </script>
+                            {% elif message.tags == 'success' %}
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+                                <script src="{% static 'toast/jquery.toast.js' %}"></script>
+                                <script>
+                                    var myToast = $.toast({
+                                        heading: 'Success',
+                                        text: 'Đăng ký thành công',
+                                        showHideTransition: 'fade',
+                                        icon: 'success',
+                                        position: 'top-right'
+                                    })
+                                </script>
+                                {% elif message.tags == 'info' %}
+                                                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+                                <script src="{% static 'toast/jquery.toast.js' %}"></script>
+                                <script>
+                                    var myToast = $.toast({
+                                        heading: 'Error',
+                                        text: 'Tài khoản đã tồn tại',
+                                        showHideTransition: 'fade',
+                                        icon: 'error',
+                                        position: 'top-right'
+                                    })
+                                </script>
+                            {% endif %}
+
+
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
                 {% csrf_token %}
                 <h2 class="title">Sign In</h2>
                 <div class="input-field">

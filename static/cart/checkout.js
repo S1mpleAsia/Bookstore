@@ -48,8 +48,8 @@ function warningBeforeDelete(e) {
 
     else {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Bạn có chắc chắn không?',
+            text: "Bạn không thể hoàn tác lại hành động này!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -58,8 +58,8 @@ function warningBeforeDelete(e) {
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
+                    'Hoàn tất!',
+                    'Bạn đã đặt hàng thành công.',
                     'success',
                 ).then(function (){
                     saveOrder();

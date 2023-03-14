@@ -75,7 +75,8 @@
 
                     <!-- Order notes -->
                     <div class="order-notes form-group">
-                        <textarea class="input border border-1 border-secondary" placeholder="Order Notes" style="height: 200px" name="note"></textarea>
+                        <textarea class="input border border-1 border-secondary" placeholder="Order Notes"
+                                  style="height: 200px" name="note"></textarea>
                     </div>
                     <!-- /Order notes -->
                 </form>
@@ -93,14 +94,13 @@
                         <div><strong>TOTAL</strong></div>
                     </div>
                     <div class="order-products">
-                        <div class="order-col">
-                            <div>1x Product Name Goes Here</div>
-                            <div>$980.00</div>
-                        </div>
-                        <div class="order-col">
-                            <div>2x Product Name Goes Here</div>
-                            <div>$980.00</div>
-                        </div>
+                        {% for cart_item in cart_items %}
+                            <div class="order-col">
+                                <div> {{ cart_item.item.title}}</div>
+                                <div>${{ cart_item.get_total | floatformat:2}}</div>
+                            </div>
+                        {% endfor %}
+
                     </div>
                     <div class="order-col">
                         <div>Shiping</div>
@@ -110,22 +110,13 @@
                         <div><strong>TOTAL</strong></div>
                         <div>
                             <strong class="order-total"
-                            >$2940.00</strong
+                            >${{ cart.get_cart_total | floatformat:2 }}</strong
                             >
                         </div>
                     </div>
                 </div>
 
-                <div class="input-checkbox">
-                    <input type="checkbox" id="terms"/>
-                    <label for="terms">
-                        <span></span>
-                        I've read and accept the
-                        <a href="#">terms & conditions</a>
-                    </label>
-                </div>
-                <a href="#" class="primary-btn order-submit"
-                >Place order</a
+                <a href="#" class="primary-btn order-submit">Place order</a
                 >
             </div>
             <!-- /Order Details -->

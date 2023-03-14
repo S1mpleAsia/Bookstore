@@ -6,13 +6,13 @@ from books.models import Book
 from cart.models import Cart, CartItem
 from user.models import CustomerUser
 from order.models import Order
-from django.contrib.auth import authenticate, login, decorators
-from django.http import JsonResponse
+from django.contrib.auth import authenticate, login, decorators, logout
+from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
-
+from django.contrib import messages
 
 class HomeView(View):
     def get(self, request):
@@ -27,10 +27,14 @@ class ItemView(View):
         customer = request.user
         if str(customer) != 'AnonymousUser':
             cart, created = Cart.objects.get_or_create(user=customer)
+            cart_items = cart.cartitem_set.all()
             quantity = cart.get_cart_quantity
+            context = {"data": book, "user": customer, "cart_items": cart_items, "quantity": quantity, "cart": cart}
         else:
-            quantity = 0
-        context = {"data": book, "quantity": quantity}
+            cart_items = []
+            cart = []
+            context = {"data": book, "user": customer, "cart_items": cart_items, "quantity": 0, "cart": cart}
+
         return render(request, 'item/index.html', context)
 
 
@@ -45,7 +49,8 @@ class LoginClass(View):
         myUser = authenticate(username=username, password=password)
 
         if myUser is None:
-            return HttpResponse('User khong ton tai')
+            messages.add_message(request, messages.ERROR, 'Hello world')
+            return render(request, 'login/login.html')
         login(request, myUser)
 
         return redirect(request.GET['next'])
@@ -73,12 +78,14 @@ class SignUp(View):
 
         for item in CustomerUser.objects.all():
             if item.username == username:
-                return HttpResponse("Them moi that bai")
+                messages.add_message(request, messages.INFO, "Sign up failed")
+                return redirect('/login?next=/')
 
         user = CustomerUser(username=username, email=email, phone_number=phone_number)
         user.set_password(password)
         user.save()
-        return HttpResponse("Them moi thanh cong")
+        messages.add_message(request, messages.SUCCESS, "Sign up Success")
+        return redirect('/login?next=/')
 
 
 @decorators.login_required(login_url='/login/')
@@ -142,6 +149,11 @@ def updateCart(request):
     elif template == 'cart':
         html = render_to_string('cart/cart-content.html', context)
         return JsonResponse(html, safe=False)
+
+
+def userLogOut(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 
 
 # POST Order method

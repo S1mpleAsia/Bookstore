@@ -11,4 +11,5 @@ urlpatterns = [
     path('checkout/', checkOutView, name='checkout'),
     path('save-order/', saveOrder, name='save-order'),
     path('get/pagination/', paginationItems, name='pagination'),
+    path('custom-logout', userLogOut, name='custom-logout'),
 ]

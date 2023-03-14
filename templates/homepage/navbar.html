@@ -9,8 +9,12 @@
                 <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
             </ul>
             <ul class="header-links pull-right">
-                <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                <li><a href="/login/?next=/"><i class="fa fa-user-o"></i> {{ user }}</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="/login/?next=/"><i class="fa fa-user-o"></i> {{ user }}</a></li>
+                {% else %}
+                    <li><a href="/login/?next=/"><i class="fa fa-user-o"></i> Login</a></li>
+                {% endif %}
+                <li><a href="/custom-logout"><i class="fa fa-right-from-bracket"></i> Log out</a></li>
             </ul>
         </div>
     </div>
@@ -84,7 +88,9 @@
                                                         class="qty">1x</span>${{ cart_item.item.price|floatformat:2 }}
                                                 </h4>
                                             </div>
-                                            <button class="delete"><i class="fa fa-times"></i></button>
+                                            <button class="delete cart-update" data-action="delete"
+                                                    data-id="{{ cart_item.item.id }}"
+                                                    data-user="{{ user }}"><i class="fa fa-times"></i></button>
                                         </div>
                                     {% endfor %}
 
